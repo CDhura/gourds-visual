@@ -21,8 +21,8 @@ let offsetX = 0, offsetY = 0;
 const MARGIN = SIZE;  // 周囲に余裕を持たせる余白（大きさはマイナスでなければ何でもいい. ）
 
 // 「軸座標系」でマス目を定義. 
-// q が +1 なら東へ１マス、–1 なら西へ１マス動いた位置を表します。
-// r が +1 なら南東へ１マス、–1 なら北西へ１マス動いた位置を表します。
+// q が +1 なら東へ１マス、–1 なら西へ１マス動いた位置を表す. 
+// r が +1 なら南東へ１マス、–1 なら北西へ１マス動いた位置を表す. 
 let coords = [];
 for(let i = 0; i < tiles.length; i++){
     if(i === 0){
@@ -108,7 +108,7 @@ function hexagonVertices() {
 // 盤面を描画
 function render() {
     // まずSVGをクリア
-    // svg.firstChild が存在する限りループを回し、子要素を一つずつ削除します。
+    // svg.firstChild が存在する限りループを回し、子要素を一つずつ削除. 
     while (svg.firstChild) {
         svg.removeChild(svg.firstChild);
     }
@@ -130,7 +130,6 @@ function render() {
             .join(' ');
         hex.setAttribute('points', points); // 頂点情報を入れる. 
 
-        // hex.setAttribute('fill', num ? '#ddd' : '#fff'); // 薄グレーor白に塗分け. →この部分を全部白にして, ピースの画像を上に重ねれば行けるかも. 
         hex.setAttribute('fill', '#ddd');
         hex.setAttribute('stroke', '#333'); // 枠線の色
         hex.setAttribute('stroke-width', '1.5'); // 枠線の幅
@@ -163,8 +162,6 @@ function render() {
         let pair = [i - 1, i];
 
         // ② ペアのタイル番号を分割代入
-        // const a = pair[0];
-        // const b = pair[1];
         const [a, b] = pair;
 
         // ③ それぞれのタイルの現在のインデックスを取得
@@ -184,14 +181,6 @@ function render() {
 
         // ⑦ 画像ソースを設定
         img.setAttribute('href', PIECE_IMG_HOR);
-        // if(pA.y === pB.y){ // 高さが同じ→横向きピースを使用. 
-        //     img.setAttribute('href',   PIECE_IMG_HOR);
-        // }else if   ((pA.x < pB.x && pA.y < pB.y) || 
-        //             (pA.x > pB.x && pA.y > pB.y)){ // 右の方が高い. →右上ピースを使用. 
-        //     img.setAttribute('href',   PIECE_IMG_LUP);
-        // }else{
-        //     img.setAttribute('href',   PIECE_IMG_RUP);
-        // }
 
         // 画像をクリック無視に設定
         img.setAttribute('pointer-events', 'none');
@@ -267,10 +256,10 @@ function move(idx) {
             [tiles[emptyIdx], tiles[idx], tiles[jointIdx]] = [tiles[idx], tiles[jointIdx], tiles[emptyIdx]];
         }
 
-        // 確認用. 
-        for(let i = 0; i < tileToIdx.length; i++){
-            console.log(tileToIdx[i]);
-        }
+        // // 確認用. 
+        // for(let i = 0; i < tileToIdx.length; i++){
+        //     console.log(tileToIdx[i]);
+        // }
 
         // 再度描画. 
         render();
@@ -289,5 +278,4 @@ function isComplete() {
 
 // 初期化
 computeLayout();
-// shuffleBtn.addEventListener('click', shuffle);
 render();
