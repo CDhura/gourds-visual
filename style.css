@@ -1,0 +1,22 @@
+/* style.css */
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    margin-top: 30px;
+    user-select: none; /* タイル内のテキストが選択されないようにする.  */
+}
+
+#shuffle {
+    margin-top: 12px;
+    padding: 6px 12px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+/* SVG 内の <text> 要素がマウスイベントを無視し、背後の <polygon> がクリックを受け取れるようになる.  */
+svg#puzzle text {
+    pointer-events: none;
+}
