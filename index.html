@@ -10,6 +10,13 @@
     <h1>Gourdsパズル（二段盤面）</h1>
     <svg id="puzzle" width="400" height="350"></svg>
     <!-- <button id="shuffle">シャッフル</button> -->
+     <!-- index.html の <body> 内、<svg id="puzzle"> の前あたりに追加 -->
+    <form id="tiles-form">
+        <label for="tiles-input">タイル配置（カンマ区切り）:</label>
+        <input type="text" id="tiles-input">
+        <button type="submit" id="apply-tiles">適用</button>
+    </form>
+
     <script src="script.js"></script>
 </body>
 </html>
