@@ -29,7 +29,7 @@ const PIECE_IMG_HOR  = 'piece-horizontal.png';
 // const PIECE_IMG_LUP = 'piece-leftup.png';
 // const PIECE_IMG_RUP = 'piece-rightup.png';
 // const PIECE_SIZE = 150;
-const PIECE_SIZE = 141;
+const PIECE_SIZE = 143;
 
 // 「軸座標系」でマス目を定義. 
 // q が +1 なら東へ１マス、–1 なら西へ１マス動いた位置を表す. 
