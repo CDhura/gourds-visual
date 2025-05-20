@@ -24,6 +24,13 @@ const SIZE = 50;
 let offsetX = 0, offsetY = 0;
 const MARGIN = SIZE;  // 周囲に余裕を持たせる余白（大きさはマイナスでなければ何でもいい. ）
 
+// ピース用の画像. 
+const PIECE_IMG_HOR  = 'piece-horizontal.png';
+// const PIECE_IMG_LUP = 'piece-leftup.png';
+// const PIECE_IMG_RUP = 'piece-rightup.png';
+// const PIECE_SIZE = 150;
+const PIECE_SIZE = 141;
+
 // 「軸座標系」でマス目を定義. 
 // q が +1 なら東へ１マス、–1 なら西へ１マス動いた位置を表す. 
 // r が +1 なら南東へ１マス、–1 なら北西へ１マス動いた位置を表す. 
@@ -48,12 +55,6 @@ for(let i = 0; i < coords.length; i++){
 for(let i = 0; i < tileToIdx.length; i++){
     console.log(tileToIdx[i]);
 }
-
-// ピース用の画像. 
-const PIECE_IMG_HOR  = 'piece-horizontal.png';
-const PIECE_IMG_LUP = 'piece-leftup.png';
-const PIECE_IMG_RUP = 'piece-rightup.png';
-const PIECE_SIZE = 150;
 
 
 // 軸座標→ピクセル変換
@@ -109,7 +110,7 @@ function hexagonVertices() {
     return pts;
 }
 
-// 盤面を描画
+// 盤面と配置を描画
 function render() {
     // まずSVGをクリア
     // svg.firstChild が存在する限りループを回し、子要素を一つずつ削除. 
@@ -141,19 +142,19 @@ function render() {
         gTiles.appendChild(hex);
 
         if (num === 0) {
-            // ── 空マスならドットを描画
+            // 空マスならドットを描画
             const dot = document.createElementNS(svg.namespaceURI, 'circle');
             dot.setAttribute('cx', x);                           // 中心X
-            dot.setAttribute('cy', y);                           // 中心Y
+            dot.setAttribute('cy', y + 1);                           // 中心Y
             dot.setAttribute('r',  SIZE * 0.10);                 // 半径（タイルサイズの15%）
             dot.setAttribute('fill', '#333');                    // 色
             dot.setAttribute('pointer-events', 'none');          // クリックを透過
             gTiles.appendChild(dot);
         } else {
-            // ── 通常マスなら番号テキストを描画
+            // 通常マスなら番号テキストを描画
             const text = document.createElementNS(svg.namespaceURI, 'text');
             text.setAttribute('x',               x);
-            text.setAttribute('y',               y + 3);
+            text.setAttribute('y',               y + 1);
             text.setAttribute('text-anchor',     'middle');
             text.setAttribute('dominant-baseline', 'central');
             text.textContent = num;
@@ -176,7 +177,7 @@ function render() {
         const pA = axialToPixel(coords[idxA].q, coords[idxA].r);
         const pB = axialToPixel(coords[idxB].q, coords[idxB].r);
 
-        // 中点を計算
+        // ピースの中点を計算
         const mx = (pA.x + pB.x) / 2;
         const my = (pA.y + pB.y) / 2 + 1; // 若干下に下げる. 
 
@@ -269,9 +270,9 @@ function move(idx) {
         render();
 
         // クリア確認. 
-        if (isComplete()) {
-            setTimeout(() => alert('クリア！'), 100);
-        }
+        // if (isComplete()) {
+        //     setTimeout(() => alert('クリア！'), 100);
+        // }
     }
 }
 
