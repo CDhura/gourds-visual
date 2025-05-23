@@ -30,12 +30,12 @@ svg#puzzle text {
 #initial-display svg {
     display: block;       /* margin:0 auto を効かせるために block 化 */
     margin: 0 auto;       /* 横方向中央寄せ */
-    width: 340px;         /* 大きさは自由に変更可能 */
+    width: 470px;         /* 大きさは自由に変更可能 */
     height: auto;         /* アスペクト比を維持 */
 }
 
 #initial-display p {
-    font-size: 0.75rem;   /* 文字を小さく */
+    font-size: 0.90rem;   /* 文字を小さく */
     /* margin: 4px 0 0;      上 4px、下 0 でラベルとの距離を調整 */
     margin-top: -10px;
 }
