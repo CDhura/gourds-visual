@@ -1,5 +1,3 @@
-/* style.css */
-
 body {
     display: flex;
     flex-direction: column;
@@ -9,14 +7,37 @@ body {
     user-select: none; /* タイル内のテキストが選択されないようにする.  */
 }
 
-#shuffle {
+/* #shuffle {
     margin-top: 12px;
     padding: 6px 12px;
     font-size: 1em;
     cursor: pointer;
-}
+} */
 
 /* SVG 内の <text> 要素がマウスイベントを無視し、背後の <polygon> がクリックを受け取れるようになる.  */
 svg#puzzle text {
     pointer-events: none;
 }
+
+/* フォーム下の初期配置表示用 */
+
+/* 初期配置を小さく表示 */
+#initial-display {
+    margin-top: 20px;       /* 既存の余白設定 */
+    text-align: center;     /* 子要素を中央寄せ */
+}
+
+#initial-display svg {
+    display: block;       /* margin:0 auto を効かせるために block 化 */
+    margin: 0 auto;       /* 横方向中央寄せ */
+    width: 340px;         /* 大きさは自由に変更可能 */
+    height: auto;         /* アスペクト比を維持 */
+}
+
+#initial-display p {
+    font-size: 0.75rem;   /* 文字を小さく */
+    /* margin: 4px 0 0;      上 4px、下 0 でラベルとの距離を調整 */
+    margin-top: -10px;
+}
+
+

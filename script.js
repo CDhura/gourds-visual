@@ -273,6 +273,7 @@ function move(idx) {
         // if (isComplete()) {
         //     setTimeout(() => alert('クリア！'), 100);
         // }
+        
     }
 }
 
@@ -310,6 +311,18 @@ function updateTilesFromInput() {
         // レイアウト再計算・再描画
         computeLayout();
         render();
+
+        // 初期配置をフォーム下に表示する
+        const initialContainer = document.getElementById('initial-display');
+        initialContainer.innerHTML = '';               // 既存内容をクリア
+        const clone = svg.cloneNode(true);             // puzzle SVG のクローンを作成
+        clone.removeAttribute('id');                   // id 重複を防ぐ
+        initialContainer.appendChild(clone);           // クローンを表示領域に追加
+
+        // 「初期配置」と表示. 
+        const label = document.createElement('p');     // <p> 要素を新規作成
+        label.textContent = '初期配置';                 // テキストとして「初期配置」を設定
+        initialContainer.appendChild(label);           // クローン下にラベルを追加
     }
 }
 
@@ -327,4 +340,5 @@ tilesForm.addEventListener('submit', function(e) {
 
 // 初期化
 computeLayout();
-render();
+// render();
+updateTilesFromInput();

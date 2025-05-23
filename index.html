@@ -13,9 +13,11 @@
      <!-- index.html の <body> 内、<svg id="puzzle"> の前あたりに追加 -->
     <form id="tiles-form">
         <label for="tiles-input">タイル配置（カンマ区切り）:</label>
-        <input type="text" id="tiles-input">
+        <input type="text" id="tiles-input" value="0,1,2,3,4,5,6,7,8,9,10,11,12">
         <button type="submit" id="apply-tiles">適用</button>
     </form>
+        <!-- 既存のフォーム要素のすぐ下に追加 -->
+    <div id="initial-display"></div>
 
     <script src="script.js"></script>
 </body>
