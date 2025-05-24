@@ -10,13 +10,19 @@
     <h1>Gourdsパズル（二段盤面）</h1>
     <svg id="puzzle" width="400" height="350"></svg>
     <!-- <button id="shuffle">シャッフル</button> -->
-     <!-- index.html の <body> 内、<svg id="puzzle"> の前あたりに追加 -->
     <form id="tiles-form">
         <label for="tiles-input">タイル配置（カンマ区切り）:</label>
-        <input type="text" id="tiles-input" value="0,1,2,3,4,5,6,7,8,9,10,11,12">
+        <input type="text" id="tiles-input" value="0,1,2,3,4,5,6,7,8">
         <button type="submit" id="apply-tiles">適用</button>
     </form>
-        <!-- 既存のフォーム要素のすぐ下に追加 -->
+
+    <!-- 現在の手数を表示 -->
+    <div id="move-count"></div>
+
+    <!-- 行った操作を戻すボタン -->
+    <button id="undo-btn">操作を戻す</button>
+
+    <!-- 初期配置を表示 -->
     <div id="initial-display"></div>
 
     <script src="script.js"></script>

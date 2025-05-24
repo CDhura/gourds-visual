@@ -1,10 +1,16 @@
-/*
-やりたいこと：
-・ピースの画像を洗練させる. 
-・「…」を追加できるようにする. 
-・ブラウザ上で配置の編集＆サイズの編集ができるようにする. 
-*/
 
+
+// 操作を元に戻す用. 
+let history = []; // 操作履歴を格納する配列. 
+const undoBtn = document.getElementById('undo-btn'); // Undoボタンを取得. 
+
+// 手数表示用の要素. 
+const moveCountDisplay = document.getElementById('move-count');
+
+// 手数表示を更新する関数. 
+function updateMoveCount() {
+    moveCountDisplay.textContent = `現在の手数: ${history.length}`;
+}
 
 // タイルの並び（0は空マスとする. ）（自由に変更可能. ）
 let tiles = [0,1,2,3,4,5,6,7,8,9,10,11,12];
@@ -26,9 +32,6 @@ const MARGIN = SIZE;  // 周囲に余裕を持たせる余白（大きさはマ�
 
 // ピース用の画像. 
 const PIECE_IMG_HOR  = 'piece-horizontal.png';
-// const PIECE_IMG_LUP = 'piece-leftup.png';
-// const PIECE_IMG_RUP = 'piece-rightup.png';
-// const PIECE_SIZE = 150;
 const PIECE_SIZE = 143;
 
 // 「軸座標系」でマス目を定義. 
@@ -50,12 +53,6 @@ let tileToIdx = Array(coords.length);
 for(let i = 0; i < coords.length; i++){
     tileToIdx[tiles[i]] = i;
 }
-
-// 確認用. 
-for(let i = 0; i < tileToIdx.length; i++){
-    console.log(tileToIdx[i]);
-}
-
 
 // 軸座標→ピクセル変換
 function axialToPixel(q, r) {
@@ -238,10 +235,15 @@ function neighbors(idx) {
 
 // タイル移動処理
 function move(idx) {
-    const emptyIdx = tiles.indexOf(0);
+
+    const emptyIdx = tiles.indexOf(0); // 空マスを取得. 
     if (neighbors(emptyIdx).includes(idx)) { // 移動するタイルと空マスが隣接している場合. 
         let neighborIdxs = neighbors(idx);
         let jointIdx; // ペアのタイルのインデックス. 
+        
+        // 履歴 & 手数の処理. 
+        history.push(tiles.slice()); // 変更前のタイル配列をコピーして履歴に保存. 
+        updateMoveCount();  // 手数表示を更新. 
 
         // jointIdxを見つける. 
         if(tiles[idx] % 2 == 0){ // タイル番号が偶数なら, 番号-1のタイル番号のインデックスを見つける. 
@@ -260,11 +262,6 @@ function move(idx) {
                 [tileToIdx[tiles[jointIdx]], tileToIdx[tiles[emptyIdx]], tileToIdx[tiles[idx]]]; // ここだけtilesの場合と異なる点に注意. 
             [tiles[emptyIdx], tiles[idx], tiles[jointIdx]] = [tiles[idx], tiles[jointIdx], tiles[emptyIdx]];
         }
-
-        // // 確認用. 
-        // for(let i = 0; i < tileToIdx.length; i++){
-        //     console.log(tileToIdx[i]);
-        // }
 
         // 再度描画. 
         render();
@@ -312,6 +309,10 @@ function updateTilesFromInput() {
         computeLayout();
         render();
 
+        // 手数を0にする. 
+        history = [];
+        updateMoveCount();
+
         // 初期配置をフォーム下に表示する
         const initialContainer = document.getElementById('initial-display');
         initialContainer.innerHTML = '';               // 既存内容をクリア
@@ -336,9 +337,30 @@ tilesForm.addEventListener('submit', function(e) {
     updateTilesFromInput();
 });
 
+// Undoボタンがクリックされたときの処理. 
+undoBtn.addEventListener('click', function() {
+    // 履歴が空なら何もしない
+    if (history.length === 0) return;
 
+    // 最後の状態を取り出し、tiles を復元
+    tiles = history.pop();
+
+    // 手数を更新. 
+    updateMoveCount();
+
+    // tileToIdx を再構築
+    tileToIdx = Array(coords.length);
+    for (let i = 0; i < coords.length; i++) {
+        tileToIdx[tiles[i]] = i;
+    }
+
+    // 盤面を再描画
+    render();
+});
+
+updateMoveCount();  // Undo ごとに表示を更新
 
 // 初期化
 computeLayout();
-// render();
 updateTilesFromInput();
+updateMoveCount();

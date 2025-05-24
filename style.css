@@ -23,7 +23,7 @@ svg#puzzle text {
 
 /* 初期配置を小さく表示 */
 #initial-display {
-    margin-top: 20px;       /* 既存の余白設定 */
+    margin-top: 10px;       /* 既存の余白設定 */
     text-align: center;     /* 子要素を中央寄せ */
 }
 
@@ -40,4 +40,19 @@ svg#puzzle text {
     margin-top: -10px;
 }
 
+/* 元に戻すボタン */
+#undo-btn {
+    margin-top: 20px;      /* 上の要素との隙間 */
+    padding: 4px 8px;    /* 内側の余白 */
+    font-size: 1em;       /* フォントサイズ */
+    /* cursor: pointer;      ホバー時にポインタを表示 */
+}
+
+/* 手数を表示 */
+#move-count {
+    margin-top: 20px;      /* ボタンとの間隔を調整 */
+    font-size: 0.9rem;    /* 文字を少し小さく */
+    text-align: center;   /* 中央寄せ */
+    color: #333;          /* 文字色 */
+}
 
