@@ -2,10 +2,14 @@
 
 // 操作を元に戻す用. 
 let history = []; // 操作履歴を格納する配列. 
-const undoBtn = document.getElementById('undo-btn'); // Undoボタンを取得. 
+// Undo 後の操作を再実行するための配列
+let redoStack = [];
 
-// 手数表示用の要素. 
+// 手数表示用要素
 const moveCountDisplay = document.getElementById('move-count');
+// ボタン要素
+const undoBtn  = document.getElementById('undo-btn');
+const redoBtn  = document.getElementById('redo-btn');
 
 // 手数表示を更新する関数. 
 function updateMoveCount() {
@@ -235,13 +239,15 @@ function neighbors(idx) {
 
 // タイル移動処理
 function move(idx) {
-
     const emptyIdx = tiles.indexOf(0); // 空マスを取得. 
+
+    // 移動可能な場合の処理. 
     if (neighbors(emptyIdx).includes(idx)) { // 移動するタイルと空マスが隣接している場合. 
         let neighborIdxs = neighbors(idx);
         let jointIdx; // ペアのタイルのインデックス. 
         
         // 履歴 & 手数の処理. 
+        redoStack = [];
         history.push(tiles.slice()); // 変更前のタイル配列をコピーして履歴に保存. 
         updateMoveCount();  // 手数表示を更新. 
 
@@ -342,11 +348,11 @@ undoBtn.addEventListener('click', function() {
     // 履歴が空なら何もしない
     if (history.length === 0) return;
 
+    // 現在の状態を redoStack に保存
+    redoStack.push(tiles.slice());
+
     // 最後の状態を取り出し、tiles を復元
     tiles = history.pop();
-
-    // 手数を更新. 
-    updateMoveCount();
 
     // tileToIdx を再構築
     tileToIdx = Array(coords.length);
@@ -356,9 +362,28 @@ undoBtn.addEventListener('click', function() {
 
     // 盤面を再描画
     render();
+    // 手数を更新. 
+    updateMoveCount();
 });
 
-updateMoveCount();  // Undo ごとに表示を更新
+// 進める（Redo）ボタンの処理
+redoBtn.addEventListener('click', function() {
+    // redoStack が空なら何もしない
+    if (redoStack.length === 0) return;
+    // 現在の状態を履歴に保存
+    history.push(tiles.slice());
+    updateMoveCount();
+    // 一手進める
+    tiles = redoStack.pop();
+    // tileToIdx を再構築
+    tileToIdx = Array(coords.length);
+    for (let i = 0; i < coords.length; i++) {
+        tileToIdx[tiles[i]] = i;
+    }
+    render();
+});
+
+// updateMoveCount();  // Undo ごとに表示を更新
 
 // 初期化
 computeLayout();

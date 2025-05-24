@@ -40,12 +40,25 @@ svg#puzzle text {
     margin-top: -10px;
 }
 
-/* 元に戻すボタン */
+.flex {
+    /* 横並びにする.  */
+    display: flex; 
+}
+
+/* undoボタン */
 #undo-btn {
     margin-top: 20px;      /* 上の要素との隙間 */
     padding: 4px 8px;    /* 内側の余白 */
     font-size: 1em;       /* フォントサイズ */
     /* cursor: pointer;      ホバー時にポインタを表示 */
+}
+
+/* redo ボタン */
+#redo-btn {
+    margin-left: 8px;    /*戻すボタンとの間隔 */
+    margin-top: 20px;      /* 上の要素との隙間 */
+    padding: 4px 8px;    /* 内側の余白 */
+    font-size: 1em;       /* フォントサイズ */
 }
 
 /* 手数を表示 */
@@ -55,4 +68,3 @@ svg#puzzle text {
     text-align: center;   /* 中央寄せ */
     color: #333;          /* 文字色 */
 }
-
